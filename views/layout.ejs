@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Systemet</title>
+	<meta charset="utf-8" />
+	<style type="text/css" media="screen">
+		body {
+			font-family: sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<%- body %>
+	
+
+	<script id="closest-store-template" type="text/html">
+		Närmaste bolag: {store}, {postal_code} {locality}. Öppnar {opens}, stänger {closes}. Öppet: {is_open}
+	</script>
+
+<script src="/javascripts/zepto/dist/zepto.min.js"></script>
+<script src="/javascripts/date-utils.min.js"></script>
+<script src="/javascripts/client.js"></script>
+</body>
+</html>

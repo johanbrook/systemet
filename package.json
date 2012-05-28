@@ -1,0 +1,18 @@
+{
+    "name": "systemet"
+  , "version": "0.0.1"
+  , "private": true
+  , "license": "MIT"
+  , "main": "./app.js"
+  , "dependencies": {
+      "express": "2.5.5"
+    , "ejs": ">= 0.6.1"
+	, "mongodb": ">= 0.9.6-7"
+	, "date-utils": ">= 1.2.7"
+	, "xml2js": ">= 0.1"
+  },
+	
+  "engines": {
+    "node": "0.6.x"
+  }
+}

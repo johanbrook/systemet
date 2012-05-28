@@ -1,0 +1,21 @@
+<h2>Stores</h2>
+
+<div id="closest"></div>
+
+<table>
+	<tr>
+		<th>Namn</th>
+		<th>Latitude</th>
+		<th>Longitude</th>
+		<th>Öppetider</th>
+	</tr>
+	
+	<% stores.forEach(function(store) { %>
+		<tr>
+			<td><%= store.Address1%></td>
+			<td><%= store.loc[0] %></td>
+			<td><%= store.loc[1] %></td>
+			<td><%=: store.opens | format: "HH24.MI" %>-<%=: store.closes | format: "HH24.MI"%></td>
+		</tr>
+	<% }); %>
+</table>
