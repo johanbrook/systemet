@@ -1,40 +1,41 @@
-fs = 	require "fs"
-mongo = require "mongodb"
-xml = 	require "xml2js"
-gauss = require 'gausskruger'
-require "date-utils"
+fs = 		require "fs"
+mongo = 	require "mongodb"
+xml = 		require "xml2js"
+gauss = 	require 'gausskruger'
+http = 		require "http"
 
-isEmpty = (obj) -> typeof obj is "object" and Object.keys(obj).length is 0
+require 	"date-utils"
+config = 	JSON.parse(fs.readFileSync "../config.json")
 
 parser = new xml.Parser()
 gauss.swedish_params "rt90_2.5_gon_v"
 
-db_name = "systemet"
-host = "localhost"
-port = 27017
-coll = "stores"
+isEmpty = (obj) -> typeof obj is "object" and Object.keys(obj).length is 0
 
-file = process.argv[2]
+db_name = config.db_name
+host = config.host
+port = config.port
+coll = config.collection
 
-if !file
+mongo_url = "mongodb://#{host}:#{port}/#{db_name}"
+path = process.argv[2]
+
+if not path
 	console.log "\n	Please provide an XML file to import\n"
 	console.log "	Usage:\n	$ node import.js <filename>\n"
 	process.exit()
 
 console.log "* Connecting to #{db_name} at #{host} on port #{port} ..."
 
-client = new mongo.Db(db_name, new mongo.Server(host, port, {}))
-client.open (err, db) ->
-	console.log "Error: #{err}" if err
-	client.dropCollection coll
-	client.collection coll, importFromFile
-
-
+mongo.connect mongo_url, {}, (error, db) ->
+	console.log error if error
+	db.dropCollection coll
+	db.collection coll, importFromFile
 
 importFromFile = (err, collection) ->
-	collection.ensureIndex loc: "2d", { min: -500, max: 500 }
-	
-	fs.readFile file, (err, data) ->
+	collection.ensureIndex loc: "2d"
+
+	fs.readFile path, (err, data) ->
 		console.log err if err
 
 		parser.parseString data, (err, json) ->
@@ -81,6 +82,5 @@ done = (err, result) ->
 	else
 		console.log "* Imported #{result.length} items into '#{coll}'"
 
-	client.close()
 	console.log "* Closed connection to database, exiting"
 	process.exit()

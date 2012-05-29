@@ -10,6 +10,7 @@
 	, "mongodb": "0.9.x"
 	, "date-utils": ">= 1.2.7"
 	, "xml2js": ">= 0.1"
+	, "nconf": "0.5.x"
   },
 	
   "engines": {

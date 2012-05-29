@@ -5,13 +5,14 @@ render = (template, data) ->
 	
 	return template
 
+capitalize = (string) ->
+	string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+
 
 handler = (position) ->
 	console.log position.coords.latitude + " " + position.coords.longitude
 	latitude = position.coords.latitude
 	longitude = position.coords.longitude
-
-	$("#position").text "Din position: #{latitude}, #{longitude}"
 
 	$.ajax
 		url: "/stores"
@@ -30,14 +31,15 @@ getClosestStore = (json) ->
 	opens = new Date(Date.parse obj.opening_hours.opens)
 	closes = new Date(Date.parse obj.opening_hours.closes)
 	is_open = Date.today().between opens, closes
-	
+
 	data = 
 		opens: opens.toFormat "HH24:MI"
 		closes: closes.toFormat "HH24:MI"
 		store: obj.address
 		postal_code: obj.postal_code
-		locality: obj.locality
+		locality: capitalize obj.locality
 		is_open: if is_open then "Ja" else "Nej"
+		query_url: encodeURIComponent("#{obj.address} #{obj.postal_code} #{obj.locality}")
 	
 	text = render $("#closest-store-template").html(), data
 	$("#closest-store").html(text)

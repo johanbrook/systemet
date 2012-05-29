@@ -1,25 +1,25 @@
 (function() {
-  var coll, db, db_name, error, fs, get_stores_from_coordinates, host, http, mongo, parser, port, success, url, xml;
-
-  fs = require("fs");
-
-  xml = require("xml2js");
-
-  http = require("http");
+  var coll, db, db_name, error, get_stores_from_coordinates, host, mongo, mongo_url, nconf, port, success, url;
 
   mongo = require("mongodb");
 
   url = require("url");
 
-  parser = new xml.Parser();
+  nconf = require("nconf");
 
-  db_name = "systemet";
+  nconf.argv().env().file({
+    file: "./config.json"
+  });
 
-  host = "localhost";
+  db_name = nconf.get("database:name");
 
-  port = 27017;
+  host = nconf.get("database:host");
 
-  coll = "stores";
+  port = nconf.get("database:port");
+
+  coll = nconf.get("database:collection");
+
+  mongo_url = "mongodb://" + host + ":" + port + "/" + db_name;
 
   console.log("Connecting to Mongo database '" + db_name + "' at " + host + " on port " + port + " ...");
 

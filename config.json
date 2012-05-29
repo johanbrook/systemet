@@ -1,0 +1,8 @@
+{
+	"database": {
+		"name": 		"systemet",
+		"host":			"localhost",
+		"port":			27017,
+		"collection":	"stores"
+	}
+}

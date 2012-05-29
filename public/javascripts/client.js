@@ -1,5 +1,5 @@
 (function() {
-  var error, getClosestStore, handler, render;
+  var capitalize, error, getClosestStore, handler, render;
 
   render = function(template, data) {
     var key, val;
@@ -10,12 +10,15 @@
     return template;
   };
 
+  capitalize = function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   handler = function(position) {
     var latitude, longitude;
     console.log(position.coords.latitude + " " + position.coords.longitude);
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
-    $("#position").text("Din position: " + latitude + ", " + longitude);
     return $.ajax({
       url: "/stores",
       data: {
@@ -41,8 +44,9 @@
       closes: closes.toFormat("HH24:MI"),
       store: obj.address,
       postal_code: obj.postal_code,
-      locality: obj.locality,
-      is_open: is_open ? "Ja" : "Nej"
+      locality: capitalize(obj.locality),
+      is_open: is_open ? "Ja" : "Nej",
+      query_url: encodeURIComponent("" + obj.address + " " + obj.postal_code + " " + obj.locality)
     };
     text = render($("#closest-store-template").html(), data);
     return $("#closest-store").html(text);

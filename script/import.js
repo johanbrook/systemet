@@ -1,5 +1,5 @@
 (function() {
-  var client, coll, db_name, done, file, fs, gauss, host, importFromFile, isEmpty, mongo, parser, port, xml;
+  var coll, config, db_name, done, fs, gauss, host, http, importFromFile, isEmpty, mongo, mongo_url, parser, path, port, xml;
 
   fs = require("fs");
 
@@ -9,27 +9,33 @@
 
   gauss = require('gausskruger');
 
+  http = require("http");
+
   require("date-utils");
 
-  isEmpty = function(obj) {
-    return typeof obj === "object" && Object.keys(obj).length === 0;
-  };
+  config = JSON.parse(fs.readFileSync("../config.json"));
 
   parser = new xml.Parser();
 
   gauss.swedish_params("rt90_2.5_gon_v");
 
-  db_name = "systemet";
+  isEmpty = function(obj) {
+    return typeof obj === "object" && Object.keys(obj).length === 0;
+  };
 
-  host = "localhost";
+  db_name = config.db_name;
 
-  port = 27017;
+  host = config.host;
 
-  coll = "stores";
+  port = config.port;
 
-  file = process.argv[2];
+  coll = config.collection;
 
-  if (!file) {
+  mongo_url = "mongodb://" + host + ":" + port + "/" + db_name;
+
+  path = process.argv[2];
+
+  if (!path) {
     console.log("\n	Please provide an XML file to import\n");
     console.log("	Usage:\n	$ node import.js <filename>\n");
     process.exit();
@@ -37,22 +43,17 @@
 
   console.log("* Connecting to " + db_name + " at " + host + " on port " + port + " ...");
 
-  client = new mongo.Db(db_name, new mongo.Server(host, port, {}));
-
-  client.open(function(err, db) {
-    if (err) console.log("Error: " + err);
-    client.dropCollection(coll);
-    return client.collection(coll, importFromFile);
+  mongo.connect(mongo_url, {}, function(error, db) {
+    if (error) console.log(error);
+    db.dropCollection(coll);
+    return db.collection(coll, importFromFile);
   });
 
   importFromFile = function(err, collection) {
     collection.ensureIndex({
       loc: "2d"
-    }, {
-      min: -500,
-      max: 500
     });
-    return fs.readFile(file, function(err, data) {
+    return fs.readFile(path, function(err, data) {
       if (err) console.log(err);
       return parser.parseString(data, function(err, json) {
         var item, lat_long, s, schedule, store, stores, today, _i, _len;
@@ -94,7 +95,6 @@
     } else {
       console.log("* Imported " + result.length + " items into '" + coll + "'");
     }
-    client.close();
     console.log("* Closed connection to database, exiting");
     return process.exit();
   };

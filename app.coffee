@@ -25,7 +25,7 @@ app.configure ->
 
 
 app.configure 'development', ->
-  app.use(express.errorHandler { dumpExceptions: true, showStack: true } )
+	app.use(express.errorHandler { dumpExceptions: true, showStack: true } )
 
 app.configure 'production', ->
   app.use(express.errorHandler())
