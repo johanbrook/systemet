@@ -8,6 +8,7 @@ body {
 	font: 1em/1.5 Georgia, serif;
 	color: #000;
 	text-align: center;
+	-webkit-tap-highlight-color: #fff;
 }
 
 h1 {
@@ -28,6 +29,12 @@ h2 {
 
 a {
 	color: green;
+}
+
+a.block {
+	display: block;
+	text-decoration: none;
+	color: #000;
 }
 
 
@@ -51,6 +58,7 @@ strong {
 	background-color: #E0F3F5;
 	border: 1px solid #CEDFE0;
 	padding: .5em 2%;
+	margin-bottom: 1.5em;
 }
 
 .details strong {
