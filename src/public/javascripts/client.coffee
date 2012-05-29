@@ -41,6 +41,7 @@ showClosestStore = (json) ->
 		locality: capitalize obj.locality
 		is_open: if is_open then "Ja" else "Nej"
 		phone: obj.phone
+		answer: if is_open then "yes" else "no"
 		query_url: encodeURIComponent("#{obj.address} #{obj.postal_code} #{obj.locality}")
 	
 	text = render $("#closest-store-template").html(), data

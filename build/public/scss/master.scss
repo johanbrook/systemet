@@ -1,26 +1,49 @@
 @import "compass/css3";
 @import "settings";
+@import "mixins";
 
 * {
 	margin: 0;
 	padding: 0;
 }
 
+html {
+	-webkit-font-smoothing: antialiased;
+	background-color: $bodybg;
+	width: 100%;
+	height: 100%;
+}
+
 body {
-	margin: 1.5em 5%;
-	font: #{$fontsize}/#{($leading/$size)} $serif;
+	font: #{$fontsize}/#{($leading/$size)} $sans;
 	color: $bodycolor;
 	text-align: center;
 	-webkit-tap-highlight-color: #fff;
+	
+	max-width: 30em;
+	width: 90%;
+	margin: $lineheight auto;
+}
+
+/*	=HEADINGS
+----------------------------------------------------------------------*/
+
+h1, h2, h3, h4 {
+	font-weight: normal;
+	font-family: $serif;
 }
 
 h1 {
 	font-size: 1.6em;
-	font-weight: normal;
+	margin-bottom: 1em;
+	
+	strong {
+		font-weight: normal;
+		color: #000;
+	}
 }
 
 h2 {
-	font-weight: normal;
 	font-size: 1.2em;
 	margin-bottom: 1em;
 }
@@ -34,19 +57,32 @@ a {
 	color: $accent;
 	
 	&:hover {
-		background-color: rgba(lighten($accent, 50%), .1);
+		background-color: rgba(lighten($accent, 20%), .1);
 	}
 }
 
 a.block {
 	display: block;
 	text-decoration: none;
-	color: #000;
 }
 
 
-strong {
-	font-family: $sans;
+/*	=CONTENT
+----------------------------------------------------------------------*/
+
+.answer {
+	color: #fff;
+	margin-bottom: .3em;
+}
+
+.answer-yes {
+	@extend .answer;
+	@include box($yescolor);
+}
+
+.answer-no {
+	@extend .answer;
+	@include box($nocolor);
 }
 
 .loading-text {
@@ -59,16 +95,41 @@ strong {
 }
 
 .details {
-	@include border-radius(4px);
-	background-color: $comp;
-	border: 1px solid darken($comp, 15%);
+	@include box(#fff, none, 20%);
+
 	padding: .5em 2%;
 	margin-bottom: 1.5em;
 }
 
-.details strong {
-	background-color: darken($comp, 10%);
+.phone {
+	font-weight: normal;
+	color: #666;
+	
+	strong {
+		color: $bodycolor;
+	}
+}
+
+time {
+	background-color: darken($bodybg, 5%);
 	padding: 1px 2px;
 	@include border-radius(2px);
-	color: desaturate(darken($comp, 70%), 30%);
+	color: desaturate(darken($bodybg, 70%), 30%);
+	font-weight: bold;
+}
+
+
+/*	=FOOTER
+----------------------------------------------------------------------*/
+
+[role="contentinfo"] {
+	
+}
+
+
+/*	=RESPONSIVE
+----------------------------------------------------------------------*/
+
+@media only screen and (min-width: 50em) {
+	
 }

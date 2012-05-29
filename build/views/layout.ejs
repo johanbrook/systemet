@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Är Systembolaget öppet?</title>
+	<title>Systemet</title>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
 	
@@ -11,29 +11,38 @@
 	<meta name="author" content="Johan Brook" />
 </head>
 <body>
-	<%- body %>
-	
+	<section role="main">
+		<%- body %>
+	</section>
 
 	<script id="closest-store-template" type="text/html">
-		<section>
-			<h1 class="huge">{is_open}</h1>
+			<h1 class="answer answer-{answer} huge">{is_open}</h1>
 			
-			<div class="details">
-				<p>Närmaste Systembolag är</p>
+			<div class="column">
+				<section class="details">
+					<p><strong>Närmaste Systembolag är</strong></p>
 				
-				<h2><a href="http://maps.google.se?q={query_url}">{store}</a> ({locality})</h2>
+					<h2><a href="http://maps.google.se?q={query_url}">{store}</a> ({postal_code}, {locality})</h2>
 				
-				<p>Öppnar <strong>{opens}</strong> och stänger <strong>{closes}</strong>. Klockan är just nu {now}</p>
+					<p>Öppnar <time>{opens}</time> och stänger <time>{closes}</time>. Klockan är just nu {now}</p>
+				</section>
+			
+				<a href="tel:{phone}" class="phone details block">
+					<p>Ring på nummer: <strong>{phone}</strong></p>
+				</a>
 			</div>
-			
-			<a href="tel:{phone}" class="details block">
-				<p>Ring på nummer: <strong>{phone}</strong></p>
-			</a>
-		</section>
 	</script>
 
-<script src="/javascripts/zepto/dist/zepto.min.js"></script>
-<script src="/javascripts/date-utils.min.js"></script>
-<script src="/javascripts/client.js"></script>
+	<footer role="contentinfo">
+		<p>
+			<small>Made by Johan Brook, 2012 
+				∙ <a href="http://johanbrook.com">Site</a>
+				∙ <a href="http://github.com/johanbrook/systemet">GitHub</a></small>
+		</p>
+	</footer>
+	
+	<script src="/javascripts/zepto/dist/zepto.min.js"></script>
+	<script src="/javascripts/date-utils.min.js"></script>
+	<script src="/javascripts/client.js"></script>
 </body>
 </html>

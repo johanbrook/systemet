@@ -48,6 +48,7 @@
       locality: capitalize(obj.locality),
       is_open: is_open ? "Ja" : "Nej",
       phone: obj.phone,
+      answer: is_open ? "yes" : "no",
       query_url: encodeURIComponent("" + obj.address + " " + obj.postal_code + " " + obj.locality)
     };
     text = render($("#closest-store-template").html(), data);
