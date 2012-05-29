@@ -71,6 +71,10 @@ a {
 a.block {
 	display: block;
 	text-decoration: none;
+	
+	&:hover {
+		background-color: rgba($accent, 0.1);
+	}
 }
 
 
