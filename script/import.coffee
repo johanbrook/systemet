@@ -2,7 +2,6 @@ fs = 		require "fs"
 mongo = 	require "mongodb"
 xml = 		require "xml2js"
 gauss = 	require 'gausskruger'
-http = 		require "http"
 
 require 	"date-utils"
 config = 	JSON.parse(fs.readFileSync "../config.json")

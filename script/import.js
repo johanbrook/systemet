@@ -1,5 +1,5 @@
 (function() {
-  var coll, config, db_name, done, fs, gauss, host, http, importFromFile, isEmpty, mongo, mongo_url, parser, path, port, xml;
+  var coll, config, db_name, done, fs, gauss, host, importFromFile, isEmpty, mongo, mongo_url, parser, path, port, xml;
 
   fs = require("fs");
 
@@ -8,8 +8,6 @@
   xml = require("xml2js");
 
   gauss = require('gausskruger');
-
-  http = require("http");
 
   require("date-utils");
 
