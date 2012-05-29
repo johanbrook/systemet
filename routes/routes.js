@@ -49,7 +49,7 @@
     return res.end(responseText);
   };
 
-  error = function(msg, code, res) {
+  error = function(code, msg, res) {
     var json;
     console.log(msg);
     json = "{\"code\": " + code + ", \"message\": \"" + msg + "\"}";
@@ -70,7 +70,7 @@
     latitude = query.lat;
     longitude = query.lon;
     if (!latitude || !longitude) {
-      return error("Please provide lat and lon query parameters", 400, res);
+      return error(400, "Please provide lat and lon query parameters", res);
     }
     return get_stores_from_coordinates([latitude, longitude], 1, function(err, results) {
       if (!err) {

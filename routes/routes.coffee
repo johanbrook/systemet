@@ -35,7 +35,7 @@ success = (results, res) ->
 	res.end responseText
 
 
-error = (msg, code, res) ->
+error = (code, msg, res) ->
 	console.log msg
 	json = "{\"code\": #{code}, \"message\": \"#{msg}\"}"
 	res.writeHead code, "Content-Type": "application/json", "Content-Length": Buffer.byteLength(json)
@@ -54,7 +54,7 @@ exports.stores = (req, res) ->
 	longitude = query.lon
 	
 	if not latitude or not longitude
-		return error "Please provide lat and lon query parameters", 400, res
+		return error 400, "Please provide lat and lon query parameters", res
 	
 	get_stores_from_coordinates [latitude, longitude], 1, (err, results) ->
 		if not err then success(results, res)
