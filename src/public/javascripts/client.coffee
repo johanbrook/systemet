@@ -35,6 +35,7 @@ showClosestStore = (json) ->
 	data = 
 		opens: opens.toFormat "HH24:MI"
 		closes: closes.toFormat "HH24:MI"
+		now: new Date().toFormat "HH24:MI"
 		store: obj.address
 		postal_code: obj.postal_code
 		locality: capitalize obj.locality
