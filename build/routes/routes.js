@@ -41,6 +41,7 @@
 
   success = function(results, res) {
     var responseText;
+    console.log("Found " + results.length + " results");
     responseText = JSON.stringify(results);
     res.writeHead(200, {
       "Content-Type": "application/json",
@@ -51,7 +52,7 @@
 
   error = function(code, msg, res) {
     var json;
-    console.log(msg);
+    console.err(msg);
     json = "{\"code\": " + code + ", \"message\": \"" + msg + "\"}";
     res.writeHead(code, {
       "Content-Type": "application/json",

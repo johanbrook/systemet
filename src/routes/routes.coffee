@@ -30,13 +30,14 @@ get_stores_from_coordinates = (coords, limit, callback) ->
 
 
 success = (results, res) ->
+	console.log "Found #{results.length} results"
 	responseText = JSON.stringify results
 	res.writeHead 200, "Content-Type": "application/json", "Content-Length": Buffer.byteLength(responseText)
 	res.end responseText
 
 
 error = (code, msg, res) ->
-	console.log msg
+	console.err msg
 	json = "{\"code\": #{code}, \"message\": \"#{msg}\"}"
 	res.writeHead code, "Content-Type": "application/json", "Content-Length": Buffer.byteLength(json)
 	res.end json
