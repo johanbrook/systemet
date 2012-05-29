@@ -1,3 +1,4 @@
+@import "compass/css3";
 @import "settings";
 
 * {
@@ -7,8 +8,8 @@
 
 body {
 	margin: 1.5em 5%;
-	font: 1em/1.5 Georgia, serif;
-	color: #000;
+	font: #{$fontsize}/#{($leading/$size)} $serif;
+	color: $bodycolor;
 	text-align: center;
 	-webkit-tap-highlight-color: #fff;
 }
@@ -30,7 +31,11 @@ h2 {
 }
 
 a {
-	color: green;
+	color: $accent;
+	
+	&:hover {
+		background-color: rgba(lighten($accent, 50%), .1);
+	}
 }
 
 a.block {
@@ -41,7 +46,7 @@ a.block {
 
 
 strong {
-	font-family: "Helvetica Neue", sans-serif;
+	font-family: $sans;
 }
 
 .loading-text {
@@ -54,20 +59,16 @@ strong {
 }
 
 .details {
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	background-color: #E0F3F5;
-	border: 1px solid #CEDFE0;
+	@include border-radius(4px);
+	background-color: $comp;
+	border: 1px solid darken($comp, 15%);
 	padding: .5em 2%;
 	margin-bottom: 1.5em;
 }
 
 .details strong {
-	background-color: #C3E0E3;
+	background-color: darken($comp, 10%);
 	padding: 1px 2px;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-	color: #394142;
+	@include border-radius(2px);
+	color: desaturate(darken($comp, 70%), 30%);
 }
