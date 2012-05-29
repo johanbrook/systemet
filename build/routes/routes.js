@@ -72,6 +72,7 @@
     if (!latitude || !longitude) {
       return error(400, "Please provide lat and lon query parameters", res);
     }
+    console.log("Incoming request to /stores with coordinates " + latitude + ", " + longitude);
     return get_stores_from_coordinates([latitude, longitude], 1, function(err, results) {
       if (!err) {
         return success(results, res);

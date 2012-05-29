@@ -10,7 +10,11 @@ reset = '\x1B[0m'
 
 
 task 'build', ->
-  build -> log "Finished building project", green
+	build log("Finished building project", green)
+
+
+task 'watch', ->
+	build true, log("Watching CoffeeScript files ...", bold)
 
 
 log = (message, color, explanation) ->
@@ -20,9 +24,9 @@ build = (watch, callback) ->
   if typeof watch is 'function'
     callback = watch
     watch = false
+  
   options = ['-c', '-o', 'build', 'src']
   options.unshift '-w' if watch
-
   coffee = spawn 'coffee', options
   coffee.stdout.on 'data', (data) -> print data.toString()
   coffee.stderr.on 'data', (data) -> log data.toString(), red

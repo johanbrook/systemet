@@ -4,21 +4,15 @@
 */
 
 (function() {
-  var app, ejs, express, routes;
+  var app, express, routes;
 
   express = require('express');
 
   routes = require('./routes/routes');
 
-  ejs = require("ejs");
-
   require("date-utils");
 
   app = module.exports = express.createServer();
-
-  ejs.filters.format = function(date, format) {
-    return new Date(date).toFormat(format);
-  };
 
   app.configure(function() {
     app.set('views', __dirname + '/views');
