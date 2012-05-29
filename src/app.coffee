@@ -4,15 +4,11 @@
 
 express = 	require 'express'
 routes = 	require './routes/routes'
-ejs = 		require "ejs"
 require 	"date-utils"
 
 app = module.exports = express.createServer()
 
 # Configuration
-
-ejs.filters.format = (date, format) ->
-	new Date(date).toFormat format
 
 app.configure ->
 	app.set('views', __dirname + '/views')
@@ -22,14 +18,11 @@ app.configure ->
 	app.use(app.router)
 	app.use(express.static(__dirname + '/public'))
 
-
-
 app.configure 'development', ->
 	app.use(express.errorHandler { dumpExceptions: true, showStack: true } )
 
 app.configure 'production', ->
   app.use(express.errorHandler())
-
 
 # Routes
 
