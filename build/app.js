@@ -8,7 +8,7 @@
 
   express = require('express');
 
-  routes = require('./routes');
+  routes = require('./routes/routes');
 
   ejs = require("ejs");
 
@@ -41,6 +41,10 @@
   });
 
   app.get('/', routes.index);
+
+  app.get('/stores', routes.stores);
+
+  app.get("/test", routes.db);
 
   app.listen(3000);
 

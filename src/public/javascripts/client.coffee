@@ -8,7 +8,6 @@ render = (template, data) ->
 capitalize = (string) ->
 	string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
-
 handler = (position) ->
 	console.log position.coords.latitude + " " + position.coords.longitude
 	latitude = position.coords.latitude
