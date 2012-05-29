@@ -4,17 +4,17 @@ xml = 		require "xml2js"
 gauss = 	require 'gausskruger'
 
 require 	"date-utils"
-config = 	JSON.parse(fs.readFileSync "../config.json")
+config = 	JSON.parse(fs.readFileSync "../../config.json")
 
 parser = new xml.Parser()
 gauss.swedish_params "rt90_2.5_gon_v"
 
 isEmpty = (obj) -> typeof obj is "object" and Object.keys(obj).length is 0
 
-db_name = config.db_name
-host = config.host
-port = config.port
-coll = config.collection
+db_name = config.database.name
+host = config.database.host
+port = config.database.port
+coll = config.database.collection
 
 mongo_url = "mongodb://#{host}:#{port}/#{db_name}"
 path = process.argv[2]

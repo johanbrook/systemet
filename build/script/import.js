@@ -11,7 +11,7 @@
 
   require("date-utils");
 
-  config = JSON.parse(fs.readFileSync("../config.json"));
+  config = JSON.parse(fs.readFileSync("../../config.json"));
 
   parser = new xml.Parser();
 
@@ -21,13 +21,13 @@
     return typeof obj === "object" && Object.keys(obj).length === 0;
   };
 
-  db_name = config.db_name;
+  db_name = config.database.name;
 
-  host = config.host;
+  host = config.database.host;
 
-  port = config.port;
+  port = config.database.port;
 
-  coll = config.collection;
+  coll = config.database.collection;
 
   mongo_url = "mongodb://" + host + ":" + port + "/" + db_name;
 
