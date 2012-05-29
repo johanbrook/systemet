@@ -21,8 +21,6 @@
 
   mongo_url = "mongodb://" + host + ":" + port + "/" + db_name;
 
-  console.log("Mongo URL: " + process.env.MONGOLAB_URI);
-
   console.log("Connecting to Mongo database '" + db_name + "' at " + host + " on port " + port + " ...");
 
   db = new mongo.Db(db_name, new mongo.Server(host, port, {}));
