@@ -19,7 +19,15 @@ body {
 	color: $bodycolor;
 	text-align: center;
 	-webkit-tap-highlight-color: #fff;
-	
+}
+
+[role="banner"] {
+	background-color: #fff;
+	padding: .5em 0;
+	border-bottom: 1px solid darken($bodybg, 10%);
+}
+
+[role="main"] {
 	max-width: 30em;
 	width: 90%;
 	margin: $lineheight auto;
@@ -35,7 +43,6 @@ h1, h2, h3, h4 {
 
 h1 {
 	font-size: 1.6em;
-	margin-bottom: 1em;
 	
 	strong {
 		font-weight: normal;
@@ -57,7 +64,7 @@ a {
 	color: $accent;
 	
 	&:hover {
-		background-color: rgba(lighten($accent, 20%), .1);
+		color: darken($accent, 10%);
 	}
 }
 
