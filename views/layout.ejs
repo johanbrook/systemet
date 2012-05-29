@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Systemet</title>
+	<title>Är Systembolaget öppet?</title>
 	<meta charset="utf-8" />
-	<style type="text/css" media="screen">
-		body {
-			font-family: sans-serif;
-		}
-	</style>
+	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="author" content="Johan Brook" />
 </head>
 <body>
 	<%- body %>
 	
 
 	<script id="closest-store-template" type="text/html">
-		Närmaste bolag: {store}, {postal_code} {locality}. Öppnar {opens}, stänger {closes}. Öppet: {is_open}
+		<section>
+			<h1 class="huge">{is_open}</h1>
+			
+			<div class="details">
+				<p>Närmaste Systembolag är</p>
+				
+				<h2><a href="http://maps.google.se?q={query_url}">{store}</a> ({locality})</h2>
+				
+				<p>Öppnar <strong>{opens}</strong> och stänger <strong>{closes}</strong></p>
+			</div>
+		</section>
 	</script>
 
 <script src="/javascripts/zepto/dist/zepto.min.js"></script>
