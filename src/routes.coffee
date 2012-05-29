@@ -1,28 +1,24 @@
 mongo = 	require "mongodb"
 url =	 	require "url"
-nconf = 	require "nconf"
 
-nconf
-	.argv()
-	.env()
-	.file(file: "./config.json")
+db_name = 	"systemet"
+host = 		"localhost"
+port = 		27017
 
-db_name = 	nconf.get "database:name"
-host = 		nconf.get "database:host"
-port = 		nconf.get "database:port"
-coll = 		nconf.get "database:collection"
-
-mongo_url = "mongodb://#{host}:#{port}/#{db_name}"
-
-console.log "Connecting to Mongo database '#{db_name}' at #{host} on port #{port} ..."
-db = new mongo.Db(db_name, new mongo.Server(host, port, {}))
-db.open () ->
+DB = null
+mongo_url = process.env.MONGOLAB_URI || "mongodb://#{host}:#{port}/#{db_name}"
+	
+mongo.connect mongo_url, {}, (error, db) ->
+	console.log "Connecting to Mongo database on #{mongo_url} ..."
+	
+	DB = db
+	DB.addListener "error", (err) -> console.err "Error connecting to MongoDB"
 
 
 # Helpers
 
 get_stores_from_coordinates = (coords, limit, callback) ->
-	db.collection coll, (err, collection) ->
+	DB.collection "stores", (err, collection) ->
 		q = 
 			loc : 
 				# No idea why I have to call parseFloat on the coords ..

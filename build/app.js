@@ -4,19 +4,13 @@
 */
 
 (function() {
-  var app, express, nconf, routes;
+  var app, express, routes;
 
   express = require('express');
 
   routes = require('./routes');
 
-  nconf = require('nconf');
-
   require("date-utils");
-
-  nconf.argv().env().defaults({
-    PORT: 3000
-  });
 
   app = module.exports = express.createServer();
 
@@ -44,10 +38,8 @@
 
   app.get('/stores', routes.stores);
 
-  app.listen(nconf.get("PORT"));
+  app.listen(process.env.PORT || 3000);
 
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-
-  console.log("Mongo URL: " + (nconf.get('MONGOLAB_URI')));
 
 }).call(this);

@@ -4,19 +4,18 @@ xml = 		require "xml2js"
 gauss = 	require 'gausskruger'
 
 require 	"date-utils"
-config = 	JSON.parse(fs.readFileSync "../../config.json")
 
 parser = new xml.Parser()
 gauss.swedish_params "rt90_2.5_gon_v"
 
 isEmpty = (obj) -> typeof obj is "object" and Object.keys(obj).length is 0
 
-db_name = config.database.name
-host = config.database.host
-port = config.database.port
-coll = config.database.collection
+db_name = 	"systemet"
+host = 		"localhost"
+port = 		27017
+coll = 		"stores"
 
-mongo_url = "mongodb://#{host}:#{port}/#{db_name}"
+mongo_url = process.env.MONGOLAB_URI || "mongodb://#{host}:#{port}/#{db_name}"
 path = process.argv[2]
 
 if not path
@@ -27,7 +26,9 @@ if not path
 console.log "* Connecting to #{db_name} at #{host} on port #{port} ..."
 
 mongo.connect mongo_url, {}, (error, db) ->
-	console.log error if error
+	
+	db.addListener "error", (err) -> console.err "Error connecting to MongoDB"
+	
 	db.dropCollection coll
 	db.collection coll, importFromFile
 

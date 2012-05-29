@@ -1,34 +1,30 @@
 (function() {
-  var coll, db, db_name, error, get_stores_from_coordinates, host, mongo, mongo_url, nconf, port, success, url;
+  var DB, db_name, error, get_stores_from_coordinates, host, mongo, mongo_url, port, success, url;
 
   mongo = require("mongodb");
 
   url = require("url");
 
-  nconf = require("nconf");
+  db_name = "systemet";
 
-  nconf.argv().env().file({
-    file: "./config.json"
+  host = "localhost";
+
+  port = 27017;
+
+  DB = null;
+
+  mongo_url = process.env.MONGOLAB_URI || ("mongodb://" + host + ":" + port + "/" + db_name);
+
+  mongo.connect(mongo_url, {}, function(error, db) {
+    console.log("Connecting to Mongo database on " + mongo_url + " ...");
+    DB = db;
+    return DB.addListener("error", function(err) {
+      return console.err("Error connecting to MongoDB");
+    });
   });
 
-  db_name = nconf.get("database:name");
-
-  host = nconf.get("database:host");
-
-  port = nconf.get("database:port");
-
-  coll = nconf.get("database:collection");
-
-  mongo_url = "mongodb://" + host + ":" + port + "/" + db_name;
-
-  console.log("Connecting to Mongo database '" + db_name + "' at " + host + " on port " + port + " ...");
-
-  db = new mongo.Db(db_name, new mongo.Server(host, port, {}));
-
-  db.open(function() {});
-
   get_stores_from_coordinates = function(coords, limit, callback) {
-    return db.collection(coll, function(err, collection) {
+    return DB.collection("stores", function(err, collection) {
       var q;
       q = {
         loc: {

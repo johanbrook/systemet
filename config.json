@@ -1,8 +1,7 @@
 {
+	"MONGOLAB_URI": "mongodb://localhost:27017/systemet"
+
 	"database": {
-		"name": 		"systemet",
-		"host":			"localhost",
-		"port":			27017,
 		"collection":	"stores"
 	}
 }

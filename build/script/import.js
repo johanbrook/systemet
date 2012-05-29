@@ -1,5 +1,5 @@
 (function() {
-  var coll, config, db_name, done, fs, gauss, host, importFromFile, isEmpty, mongo, mongo_url, parser, path, port, xml;
+  var coll, db_name, done, fs, gauss, host, importFromFile, isEmpty, mongo, mongo_url, parser, path, port, xml;
 
   fs = require("fs");
 
@@ -11,8 +11,6 @@
 
   require("date-utils");
 
-  config = JSON.parse(fs.readFileSync("../../config.json"));
-
   parser = new xml.Parser();
 
   gauss.swedish_params("rt90_2.5_gon_v");
@@ -21,15 +19,15 @@
     return typeof obj === "object" && Object.keys(obj).length === 0;
   };
 
-  db_name = config.database.name;
+  db_name = "systemet";
 
-  host = config.database.host;
+  host = "localhost";
 
-  port = config.database.port;
+  port = 27017;
 
-  coll = config.database.collection;
+  coll = "stores";
 
-  mongo_url = "mongodb://" + host + ":" + port + "/" + db_name;
+  mongo_url = process.env.MONGOLAB_URI || ("mongodb://" + host + ":" + port + "/" + db_name);
 
   path = process.argv[2];
 
@@ -42,7 +40,9 @@
   console.log("* Connecting to " + db_name + " at " + host + " on port " + port + " ...");
 
   mongo.connect(mongo_url, {}, function(error, db) {
-    if (error) console.log(error);
+    db.addListener("error", function(err) {
+      return console.err("Error connecting to MongoDB");
+    });
     db.dropCollection(coll);
     return db.collection(coll, importFromFile);
   });
