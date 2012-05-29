@@ -8,6 +8,7 @@ render = (template, data) ->
 capitalize = (string) ->
 	string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
+
 handler = (position) ->
 	console.log position.coords.latitude + " " + position.coords.longitude
 	latitude = position.coords.latitude
@@ -17,11 +18,11 @@ handler = (position) ->
 		url: "/stores"
 		data: lat: latitude, lon: longitude
 		dataType: "json"
-		success: getClosestStore
+		success: showClosestStore
 		error: error
 
 
-getClosestStore = (json) ->
+showClosestStore = (json) ->
 	return if !json
 	
 	obj = json[0]

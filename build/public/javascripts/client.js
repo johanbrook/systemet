@@ -1,5 +1,5 @@
 (function() {
-  var capitalize, error, getClosestStore, handler, render;
+  var capitalize, error, handler, render, showClosestStore;
 
   render = function(template, data) {
     var key, val;
@@ -26,12 +26,12 @@
         lon: longitude
       },
       dataType: "json",
-      success: getClosestStore,
+      success: showClosestStore,
       error: error
     });
   };
 
-  getClosestStore = function(json) {
+  showClosestStore = function(json) {
     var closes, data, is_open, obj, opens, text;
     if (!json) return;
     obj = json[0];
