@@ -31,7 +31,6 @@ app.configure 'production', ->
   app.use(express.errorHandler())
 
 
-
 # Routes
 
 app.get '/', routes.index

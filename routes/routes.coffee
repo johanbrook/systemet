@@ -35,50 +35,17 @@ success = (results, res) ->
 	res.end responseText
 
 
-error = (error, res) ->
-	res.statusCode 500
-	res.end "Something went wrong"
+error = (msg, code, res) ->
+	console.log msg
+	json = "{\"code\": #{code}, \"message\": \"#{msg}\"}"
+	res.writeHead code, "Content-Type": "application/json", "Content-Length": Buffer.byteLength(json)
+	res.end json
 
 
-
-# GET home page.
-
-exports.db = (req, res) ->
-	db.collection coll, (err, collection) ->
-		collection.find().toArray (err, results) ->
-			res.render 'stores', stores: results
+# Routes
 
 exports.index = (req, res) ->	
-	
-	res.render "index", title: "Är systemet öppet?"
-	
-###	fs.readFile __dirname + "/../data.xml", (err, data) ->
-		parser.parseString data, (err, result) ->
-			return if err
-			
-			schedule = result.ButikOmbud.Oppettider.split(";;;")[0]
-			date = schedule.split(";")[0]
-			opens = new Date( Date.parse date+"T"+schedule.split(";")[1])
-			closes = new Date( Date.parse date+"T"+schedule.split(";")[2])
-			
-			today = new Date()
-			lat_long = gauss.grid_to_geodetic result.ButikOmbud.RT90x, result.ButikOmbud.RT90y
-			
-			store = {
-				address: result.ButikOmbud.Address1
-				date: new Date(Date.parse date)
-				opens: opens
-				closes: closes
-				isOpen: today.between opens, closes
-				lat: lat_long[0]
-				long: lat_long[1]
-			}
-			
-			res.render 'index', { 
-				title: 'Är systemet öppet?'
-				store: store
-			}
-###
+	res.render "index"
 
 exports.stores = (req, res) ->
 	
@@ -86,7 +53,8 @@ exports.stores = (req, res) ->
 	latitude = query.lat
 	longitude = query.lon
 	
-	console.log "Request to /stores received: #{latitude} #{longitude}"
+	if not latitude or not longitude
+		return error "Please provide lat and lon query parameters", 400, res
 	
 	get_stores_from_coordinates [latitude, longitude], 1, (err, results) ->
 		if not err then success(results, res)

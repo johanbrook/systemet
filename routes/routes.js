@@ -49,61 +49,29 @@
     return res.end(responseText);
   };
 
-  error = function(error, res) {
-    res.statusCode(500);
-    return res.end("Something went wrong");
-  };
-
-  exports.db = function(req, res) {
-    return db.collection(coll, function(err, collection) {
-      return collection.find().toArray(function(err, results) {
-        return res.render('stores', {
-          stores: results
-        });
-      });
+  error = function(msg, code, res) {
+    var json;
+    console.log(msg);
+    json = "{\"code\": " + code + ", \"message\": \"" + msg + "\"}";
+    res.writeHead(code, {
+      "Content-Type": "application/json",
+      "Content-Length": Buffer.byteLength(json)
     });
+    return res.end(json);
   };
 
   exports.index = function(req, res) {
-    return res.render("index", {
-      title: "Är systemet öppet?"
-    });
+    return res.render("index");
   };
-
-  /*	fs.readFile __dirname + "/../data.xml", (err, data) ->
-  		parser.parseString data, (err, result) ->
-  			return if err
-  			
-  			schedule = result.ButikOmbud.Oppettider.split(";;;")[0]
-  			date = schedule.split(";")[0]
-  			opens = new Date( Date.parse date+"T"+schedule.split(";")[1])
-  			closes = new Date( Date.parse date+"T"+schedule.split(";")[2])
-  			
-  			today = new Date()
-  			lat_long = gauss.grid_to_geodetic result.ButikOmbud.RT90x, result.ButikOmbud.RT90y
-  			
-  			store = {
-  				address: result.ButikOmbud.Address1
-  				date: new Date(Date.parse date)
-  				opens: opens
-  				closes: closes
-  				isOpen: today.between opens, closes
-  				lat: lat_long[0]
-  				long: lat_long[1]
-  			}
-  			
-  			res.render 'index', { 
-  				title: 'Är systemet öppet?'
-  				store: store
-  			}
-  */
 
   exports.stores = function(req, res) {
     var latitude, longitude, query;
     query = url.parse(req.url, true).query;
     latitude = query.lat;
     longitude = query.lon;
-    console.log("Request to /stores received: " + latitude + " " + longitude);
+    if (!latitude || !longitude) {
+      return error("Please provide lat and lon query parameters", 400, res);
+    }
     return get_stores_from_coordinates([latitude, longitude], 1, function(err, results) {
       if (!err) {
         return success(results, res);
