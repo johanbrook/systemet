@@ -13,6 +13,7 @@ mongo.connect mongo_url, {}, (error, db) ->
 	
 	DB = db
 	DB.addListener "error", (err) -> console.err "Error connecting to MongoDB"
+	console.log "Successfully connected to database" if not error
 
 
 # Helpers

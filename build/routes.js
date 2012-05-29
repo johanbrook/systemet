@@ -18,9 +18,10 @@
   mongo.connect(mongo_url, {}, function(error, db) {
     console.log("Connecting to Mongo database on " + mongo_url + " ...");
     DB = db;
-    return DB.addListener("error", function(err) {
+    DB.addListener("error", function(err) {
       return console.err("Error connecting to MongoDB");
     });
+    if (!error) return console.log("Successfully connected to database");
   });
 
   get_stores_from_coordinates = function(coords, limit, callback) {
