@@ -3,7 +3,7 @@
 ###
 
 express = 	require 'express'
-routes = 	require './routes/routes'
+routes = 	require './routes'
 require 	"date-utils"
 
 app = module.exports = express.createServer()
@@ -28,7 +28,6 @@ app.configure 'production', ->
 
 app.get '/', routes.index
 app.get '/stores', routes.stores
-app.get "/test", routes.db
 
 app.listen 3000
 console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env

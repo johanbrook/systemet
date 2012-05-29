@@ -8,7 +8,7 @@
 
   express = require('express');
 
-  routes = require('./routes/routes');
+  routes = require('./routes');
 
   require("date-utils");
 
@@ -37,8 +37,6 @@
   app.get('/', routes.index);
 
   app.get('/stores', routes.stores);
-
-  app.get("/test", routes.db);
 
   app.listen(3000);
 

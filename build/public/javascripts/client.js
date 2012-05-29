@@ -38,7 +38,7 @@
     console.log(obj);
     opens = new Date(Date.parse(obj.opening_hours.opens));
     closes = new Date(Date.parse(obj.opening_hours.closes));
-    is_open = Date.today().between(opens, closes);
+    is_open = new Date().between(opens, closes);
     data = {
       opens: opens.toFormat("HH24:MI"),
       closes: closes.toFormat("HH24:MI"),
@@ -46,6 +46,7 @@
       postal_code: obj.postal_code,
       locality: capitalize(obj.locality),
       is_open: is_open ? "Ja" : "Nej",
+      phone: obj.phone,
       query_url: encodeURIComponent("" + obj.address + " " + obj.postal_code + " " + obj.locality)
     };
     text = render($("#closest-store-template").html(), data);
