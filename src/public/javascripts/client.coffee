@@ -28,7 +28,7 @@ handler = (position) ->
 
 
 showClosestStore = (json) ->	
-	return error "No data was received" if not json
+	return error "No data was received" if not json or json.length is 0
 	obj = json[0]
 	
 	opens = new Date(Date.parse obj.opening_hours.opens)

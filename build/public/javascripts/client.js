@@ -39,7 +39,7 @@
 
   showClosestStore = function(json) {
     var closes, data, is_open, obj, opens;
-    if (!json) return error("No data was received");
+    if (!json || json.length === 0) return error("No data was received");
     obj = json[0];
     opens = new Date(Date.parse(obj.opening_hours.opens));
     closes = new Date(Date.parse(obj.opening_hours.closes));
