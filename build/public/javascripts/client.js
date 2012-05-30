@@ -1,13 +1,19 @@
 (function() {
-  var capitalize, error, handler, render, showClosestStore;
+  var capitalize, error, handler, render, showClosestStore, t;
 
-  render = function(template, data) {
+  t = function(template, data) {
     var key, val;
     for (key in data) {
       val = data[key];
       template = template.replace(new RegExp("{" + key + "}", 'g'), val);
     }
     return template;
+  };
+
+  render = function(element, template, data) {
+    var text;
+    text = t($(template).html(), data);
+    return $(element).html(text);
   };
 
   capitalize = function(string) {
@@ -32,10 +38,9 @@
   };
 
   showClosestStore = function(json) {
-    var closes, data, is_open, obj, opens, text;
-    if (!json) return;
+    var closes, data, is_open, obj, opens;
+    if (!json) return error("No data was received");
     obj = json[0];
-    console.log(obj);
     opens = new Date(Date.parse(obj.opening_hours.opens));
     closes = new Date(Date.parse(obj.opening_hours.closes));
     is_open = new Date().between(opens, closes);
@@ -51,12 +56,15 @@
       answer: is_open ? "yes" : "no",
       query_url: encodeURIComponent("" + obj.address + " " + obj.postal_code + " " + obj.locality)
     };
-    text = render($("#closest-store-template").html(), data);
-    return $("#closest-store").html(text);
+    return render("#closest-store", "#closest-store-template", data);
   };
 
   error = function(msg) {
-    alert("Something went wrong. See the log for details");
+    var data;
+    data = {
+      msg: msg
+    };
+    render("[role='main']", "#error-template", data);
     return console.error(msg);
   };
 

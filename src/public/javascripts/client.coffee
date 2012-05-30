@@ -1,9 +1,14 @@
-render = (template, data) ->
+t = (template, data) ->
 
 	for key, val of data
 		template = template.replace new RegExp( "{#{key}}", 'g'), val
 	
 	return template
+
+render = (element, template, data) ->
+	text = t $(template).html(), data
+	$(element).html text
+	
 
 capitalize = (string) ->
 	string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
@@ -22,11 +27,9 @@ handler = (position) ->
 		error: error
 
 
-showClosestStore = (json) ->
-	return if !json
-	
+showClosestStore = (json) ->	
+	return error "No data was received" if not json
 	obj = json[0]
-	console.log obj
 	
 	opens = new Date(Date.parse obj.opening_hours.opens)
 	closes = new Date(Date.parse obj.opening_hours.closes)
@@ -44,12 +47,12 @@ showClosestStore = (json) ->
 		answer: if is_open then "yes" else "no"
 		query_url: encodeURIComponent("#{obj.address} #{obj.postal_code} #{obj.locality}")
 	
-	text = render $("#closest-store-template").html(), data
-	$("#closest-store").html(text)
+	render "#closest-store", "#closest-store-template", data
 
 
 error = (msg) ->
-	alert "Something went wrong. See the log for details"
+	data = {msg: msg}
+	render "[role='main']", "#error-template", data
 	console.error msg
 
 
