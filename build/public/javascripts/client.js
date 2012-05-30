@@ -55,9 +55,8 @@
     return $("#closest-store").html(text);
   };
 
-  error = function(msg, status) {
+  error = function(msg) {
     alert("Something went wrong. See the log for details");
-    console.error(status);
     return console.error(msg);
   };
 
@@ -65,7 +64,7 @@
     if (navigator.geolocation) {
       return navigator.geolocation.getCurrentPosition(handler, error);
     } else {
-      return alert("Geolocation is not supported. Get a better browser");
+      return error("Geolocation is not supported. Get a better browser in order to use this app");
     }
   });
 

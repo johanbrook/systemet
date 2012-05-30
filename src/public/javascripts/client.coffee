@@ -48,9 +48,8 @@ showClosestStore = (json) ->
 	$("#closest-store").html(text)
 
 
-error = (msg, status) ->
+error = (msg) ->
 	alert "Something went wrong. See the log for details"
-	console.error status
 	console.error msg
 
 
@@ -58,4 +57,4 @@ $(document).ready ->
 	if navigator.geolocation
 		navigator.geolocation.getCurrentPosition handler, error
 	else
-		alert "Geolocation is not supported. Get a better browser"
+		error "Geolocation is not supported. Get a better browser in order to use this app"
