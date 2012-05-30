@@ -1,7 +1,0 @@
-{
-	"MONGOLAB_URI": "mongodb://localhost:27017/systemet"
-
-	"database": {
-		"collection":	"stores"
-	}
-}

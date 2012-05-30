@@ -10,8 +10,6 @@
 
   routes = require('./routes');
 
-  require("date-utils");
-
   app = module.exports = express.createServer();
 
   app.configure(function() {
