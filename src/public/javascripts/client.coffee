@@ -67,6 +67,6 @@ $(document).ready ->
 		error "Geolocation is not supported. Get a better browser in order to use this app"
 	
 	
-	$(".flip").live "click", (evt) ->
+	$(".card").live "click tap", (evt) ->
 		$("#card").toggleClass "flipped"
 		evt.preventDefault()

@@ -78,7 +78,7 @@
     } else {
       error("Geolocation is not supported. Get a better browser in order to use this app");
     }
-    return $(".flip").live("click", function(evt) {
+    return $(".card").live("click tap", function(evt) {
       $("#card").toggleClass("flipped");
       return evt.preventDefault();
     });
