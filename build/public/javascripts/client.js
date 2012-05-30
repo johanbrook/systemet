@@ -74,10 +74,14 @@
 
   $(document).ready(function() {
     if (navigator.geolocation) {
-      return navigator.geolocation.getCurrentPosition(handler, error);
+      navigator.geolocation.getCurrentPosition(handler, error);
     } else {
-      return error("Geolocation is not supported. Get a better browser in order to use this app");
+      error("Geolocation is not supported. Get a better browser in order to use this app");
     }
+    return $(".flip").live("click", function(evt) {
+      $("#card").toggleClass("flipped");
+      return evt.preventDefault();
+    });
   });
 
 }).call(this);

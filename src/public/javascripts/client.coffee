@@ -65,3 +65,8 @@ $(document).ready ->
 		navigator.geolocation.getCurrentPosition handler, error
 	else
 		error "Geolocation is not supported. Get a better browser in order to use this app"
+	
+	
+	$(".flip").live "click", (evt) ->
+		$("#card").toggleClass "flipped"
+		evt.preventDefault()

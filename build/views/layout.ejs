@@ -24,12 +24,39 @@
 		<%- body %>
 	</section>
 	
+	<footer role="contentinfo">
+		<p>
+			<small>Made by Johan Brook</small>
+		</p>
+	</footer>
+	
 	<script id="error-template" type="text/html">
 		<strong class="error">{message}</strong>
 	</script>
 	
 	<script id="closest-store-template" type="text/html">
-			<h1 class="answer answer-{answer} huge">{is_open}</h1>
+			<div class="card-container">
+				<div id="card">
+					<section class="card front">
+						<h1 class="answer answer-{answer} huge">{is_open}</h1>
+						<a class="flip">?</a>
+					</section>
+					
+					<section class="card back">
+						<h3>"Är Systemet öppet?"</h3>
+						<a class="flip">✘</a>
+						
+						<p>En fråga jag ofta ställer mig. Hoppas detta ska hjälpa dig.</p>
+						
+						<footer>
+							<p><small>Made by Johan Brook, 2012
+								∙ <a href="http://johanbrook.com">Site</a>
+								∙ <a href="http://github.com/johanbrook/systemet">GitHub</a>
+							</small></p>
+						</footer>
+					</section>
+				</div>
+			</div>
 			
 			<div class="column">
 				<section class="details">
@@ -45,14 +72,6 @@
 				</a>
 			</div>
 	</script>
-
-	<footer role="contentinfo">
-		<p>
-			<small>Made by Johan Brook, 2012 
-				∙ <a href="http://johanbrook.com">Site</a>
-				∙ <a href="http://github.com/johanbrook/systemet">GitHub</a></small>
-		</p>
-	</footer>
 	
 	<script src="/javascripts/zepto.min.js"></script>
 	<script src="/javascripts/date-utils.min.js"></script>

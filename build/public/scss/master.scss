@@ -36,7 +36,7 @@ body {
 /*	=HEADINGS
 ----------------------------------------------------------------------*/
 
-h1, h2, h3, h4 {
+h1, h2 {
 	font-weight: normal;
 	font-family: $serif;
 }
@@ -52,6 +52,11 @@ h1 {
 
 h2 {
 	font-size: 1.2em;
+	margin-bottom: 1em;
+}
+
+h3 {
+	font-size: 1.1em;
 	margin-bottom: 1em;
 }
 
@@ -71,9 +76,20 @@ a {
 a.block {
 	display: block;
 	text-decoration: none;
+	-webkit-tap-highlight-color: transparent;
 	
 	&:hover {
 		background-color: rgba($accent, 0.1);
+	}
+	
+	&:active {
+		background-color: desaturate($accent, 10%);
+		border-color: darken($accent, 10%);
+		color: #fff;
+		
+		* {
+			color: #fff;
+		}
 	}
 }
 
@@ -135,11 +151,121 @@ time {
 }
 
 
+/*	=CARD FLIP
+----------------------------------------------------------------------*/
+
+.card-container {
+	position: relative;
+	height: 120px;
+	-webkit-perspective: 800px;
+	-ms-perspective: 800px;
+	-moz-perspective: 800px;
+	perspective: 800px;
+}
+
+#card {
+	@include span;
+	-moz-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	
+	$duration: .6s;
+	-moz-transition: -moz-transform $duration;
+	-ms-transition: -ms-transform $duration;
+	-webkit-transition: -webkit-transform $duration;
+	transition: transform $duration;
+	
+	&.flipped {
+		@include transform(rotateX(180deg));
+		
+		.front .flip {
+			display: none;
+		}
+	}
+	
+	a.flip {
+		display: inline-block;
+		position: absolute;
+		right: 5px;
+		top: 5px;
+		z-index: 99;
+		background-color: rgba(#000, .3);
+		width: 20px;
+		height: 20px;
+		line-height: 20px;
+		color: rgba(#fff, .8);
+		font-weight: bold;
+		font-size: .8em;
+		cursor: pointer;
+		@include border-radius(3em);
+		
+		&:active {
+			background-color: rgba(#000, .5)
+		}
+	}
+}
+
+.card {
+	@include span;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	backface-visibility: hidden;
+	@include box-sizing(border-box);
+}
+
+/* Back card */
+
+.card.back {
+	@include transform(rotateX(180deg));
+	
+	@include box-shadow(inset rgba(#000, 0.7) 0 1px 8px);
+	@include border-radius(4px);
+	padding: 3%;
+	
+	background: black inline-image("texture.png") left top;
+	color: #fff;
+	font-weight: bold;
+	text-shadow: rgba(#000, .7) 0 1px 2px;
+	font-size: .9em;
+	
+	a {
+		color: #fff;
+	}
+	
+	footer {
+		margin-top: .5em;
+	}
+}
+
+
+/*	=BUTTON
+----------------------------------------------------------------------*/
+
+.button,
+button {
+	@include box(#fff, none, 20%);
+	@extend a;
+	@extend a.block;
+	-webkit-appearance: none;
+	font: bold 1em/1.5 $sans;
+	width: 100%;
+	cursor: pointer;
+	-webkit-font-smoothing: antialiased;
+	padding: .4em 1em;
+ 	color: $bodycolor;
+}
+
+
+
 /*	=FOOTER
 ----------------------------------------------------------------------*/
 
 [role="contentinfo"] {
-	
+	font-weight: bold;
+	color: rgba($bodycolor, .7);
+	padding: 0 0 .5em ;
 }
 
 
