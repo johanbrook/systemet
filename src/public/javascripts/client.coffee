@@ -50,10 +50,14 @@ showClosestStore = (json) ->
 	render "#closest-store", "#closest-store-template", data
 
 
-error = (msg) ->
-	data = {msg: msg}
+error = (object) ->
+	if object instanceof XMLHttpRequest
+		data = JSON.parse object.responseText
+	else	
+		data = {message: object}
+		
+	console.error object
 	render "[role='main']", "#error-template", data
-	console.error msg
 
 
 $(document).ready ->

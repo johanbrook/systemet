@@ -48,7 +48,7 @@
 
   error = function(code, msg, res) {
     var json;
-    console.err(msg);
+    console.error(msg);
     json = "{\"code\": " + code + ", \"message\": \"" + msg + "\"}";
     res.writeHead(code, {
       "Content-Type": "application/json",

@@ -59,13 +59,17 @@
     return render("#closest-store", "#closest-store-template", data);
   };
 
-  error = function(msg) {
+  error = function(object) {
     var data;
-    data = {
-      msg: msg
-    };
-    render("[role='main']", "#error-template", data);
-    return console.error(msg);
+    if (object instanceof XMLHttpRequest) {
+      data = JSON.parse(object.responseText);
+    } else {
+      data = {
+        message: object
+      };
+    }
+    console.error(object);
+    return render("[role='main']", "#error-template", data);
   };
 
   $(document).ready(function() {

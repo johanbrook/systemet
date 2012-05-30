@@ -36,7 +36,7 @@ success = (results, res) ->
 
 
 error = (code, msg, res) ->
-	console.err msg
+	console.error msg
 	json = "{\"code\": #{code}, \"message\": \"#{msg}\"}"
 	res.writeHead code, "Content-Type": "application/json", "Content-Length": Buffer.byteLength(json)
 	res.end json
