@@ -30,7 +30,6 @@ get_stores_from_coordinates = (coords, limit, callback) ->
 
 
 success = (results, res) ->
-	console.log "Found #{results.length} results"
 	responseText = JSON.stringify results
 	res.writeHead 200, "Content-Type": "application/json", "Content-Length": Buffer.byteLength(responseText)
 	res.end responseText
@@ -56,8 +55,6 @@ exports.stores = (req, res) ->
 	
 	if not latitude or not longitude
 		return error 400, "Please provide lat and lon query parameters", res
-	
-	console.log "Incoming request to /stores with coordinates #{latitude}, #{longitude}"
 	
 	get_stores_from_coordinates [latitude, longitude], 1, (err, results) ->
 		if not err then success(results, res)
