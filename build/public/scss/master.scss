@@ -5,33 +5,48 @@
 * {
 	margin: 0;
 	padding: 0;
+	@include box-sizing(border-box);
 }
+
+$padding:	10px;
+$radius:	10px;
+$shadow:	rgba(#000, .7) 0 2px 4px;
 
 html {
 	-webkit-font-smoothing: antialiased;
 	background-color: $bodybg;
-	width: 100%;
-	height: 100%;
 }
 
 body {
+	padding: $padding - 3px;
+	padding-top: $padding / 2;
+	
+	@include border-radius(5px);
+	
 	font: #{$fontsize}/#{($leading/$size)} $sans;
 	color: $bodycolor;
 	text-align: center;
 	-webkit-tap-highlight-color: #fff;
 }
 
-[role="banner"] {
-	background-color: #fff;
-	padding: .5em 0;
-	border-bottom: 1px solid darken($bodybg, 10%);
+
+.frame {
+	background: #fff;
+	padding: $padding*2;
+	@include box-shadow(rgba(#000, 0.6) 0 1px 3px);
+	
+	max-width: 30em;
+	margin: $padding auto;
 }
 
-[role="main"] {
-	max-width: 30em;
-	width: 90%;
-	margin: $lineheight auto;
+[role="banner"] {
+	margin-bottom: 1em;
 }
+
+p {
+	margin-bottom: 1em;
+}
+
 
 /*	=HEADINGS
 ----------------------------------------------------------------------*/
@@ -65,7 +80,7 @@ h3 {
 	letter-spacing: -0.03em;
 }
 
-a {
+a, .link {
 	color: $accent;
 	
 	&:hover {
@@ -79,7 +94,7 @@ a.block {
 	-webkit-tap-highlight-color: transparent;
 	
 	&:hover {
-		background-color: rgba($accent, 0.1);
+		background-color: rgb(232,245,253);
 	}
 	
 	&:active {
@@ -109,12 +124,12 @@ a.block {
 
 .answer-yes {
 	@extend .answer;
-	@include box($yescolor);
+	@include box($yescolor, $yescolorbottom);
 }
 
 .answer-no {
 	@extend .answer;
-	@include box($nocolor);
+	@include box($nocolor, $nocolorbottom);
 }
 
 .loading-text {
@@ -127,10 +142,8 @@ a.block {
 }
 
 .details {
-	@include box(#fff, none, 20%);
-
 	padding: .5em 2%;
-	margin-bottom: 1.5em;
+	margin-bottom: 1em;
 }
 
 .phone {
@@ -142,8 +155,12 @@ a.block {
 	}
 }
 
+.address {
+	color: #888;
+}
+
 time {
-	background-color: darken($bodybg, 5%);
+	background-color: $bodybg;
 	padding: 1px 2px;
 	@include border-radius(2px);
 	color: desaturate(darken($bodybg, 70%), 30%);
@@ -156,7 +173,7 @@ time {
 
 .card-container {
 	position: relative;
-	height: 120px;
+	height: 140px;
 	-webkit-perspective: 800px;
 	-ms-perspective: 800px;
 	-moz-perspective: 800px;
@@ -221,7 +238,8 @@ time {
 	@include transform(rotateX(180deg));
 	
 	@include box-shadow(inset rgba(#000, 0.7) 0 1px 8px);
-	@include border-radius(4px);
+	@include border-top-left-radius(4px);
+	@include border-top-right-radius(4px);
 	padding: 3%;
 	
 	background: black inline-image("texture.png") left top;
@@ -233,10 +251,6 @@ time {
 	a {
 		color: #fff;
 	}
-	
-	footer {
-		margin-top: .5em;
-	}
 }
 
 
@@ -245,7 +259,7 @@ time {
 
 .button,
 button {
-	@include box(#fff, none, 20%);
+	@include box(#fff, $textshadow: none, $borderdarkness: 20%);
 	@extend a;
 	@extend a.block;
 	-webkit-appearance: none;
@@ -272,6 +286,29 @@ button {
 /*	=RESPONSIVE
 ----------------------------------------------------------------------*/
 
-@media only screen and (min-width: 50em) {
+@media only screen and (max-device-width: 480px) {
+	html {
+		background-color: #000;
+		
+		&.standalone {
+			height: 100%;
+			
+			body {
+				height: 100%;
+			}
+		}
+	}
+	body {
+		@include background($bodybg linear-gradient($bodygradienttop, $bodygradientbottom));
+	}
 	
+	.frame {
+		@include box-shadow($shadow);
+		@include border-radius($radius);
+		padding: $padding $padding $padding*2;
+	}
+	
+	[role="contentinfo"] {
+		display: none;
+	}
 }

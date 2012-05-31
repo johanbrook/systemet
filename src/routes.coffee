@@ -11,9 +11,12 @@ mongo_url = process.env.MONGOLAB_URI || "mongodb://#{host}:#{port}/#{db_name}"
 mongo.connect mongo_url, {}, (error, db) ->
 	console.log "Connecting to Mongo database on #{mongo_url} ..."
 	
+	if db is null
+		console.error "* Error connecting to MongoDB. Db instance is null"
+		return process.exit()
+	
 	DB = db
-	DB.addListener "error", (err) -> console.err "Error connecting to MongoDB"
-	console.log "Successfully connected to database" if not error
+	console.log "* Successfully connected to database" if not error
 
 
 # Helpers

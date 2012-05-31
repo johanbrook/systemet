@@ -3,10 +3,18 @@
 $accent: 		#21a2f4;
 $bodycolor:		#444;
 $comp:			#E0F3F5; 	// Blue
-$bodybg:		#fafbf6;
+$bodybg:		#f2f1e4;
+
+//$bodygradienttop:	#5dbf28;
+//$bodygradientbottom: #2a7d01;
+
+$bodygradienttop: 	darken($bodybg, 10%);
+$bodygradientbottom: darken($bodygradienttop, 10%);
 
 $yescolor:		#5eb43c;
-$nocolor:		#dc004e;
+$yescolorbottom:#34a508;
+$nocolor:		#e90037;
+$nocolorbottom:	#bd0043;
 
 $purple:		#E01B6A;
 

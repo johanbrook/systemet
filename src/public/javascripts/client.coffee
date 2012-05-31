@@ -66,6 +66,8 @@ $(document).ready ->
 	else
 		error "Geolocation is not supported. Get a better browser in order to use this app"
 	
+	if navigator.standalone
+		$("html").addClass "standalone"
 	
 	$(".card").live "click tap", (evt) ->
 		$("#card").toggleClass "flipped"

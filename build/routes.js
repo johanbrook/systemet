@@ -17,11 +17,12 @@
 
   mongo.connect(mongo_url, {}, function(error, db) {
     console.log("Connecting to Mongo database on " + mongo_url + " ...");
+    if (db === null) {
+      console.error("* Error connecting to MongoDB. Db instance is null");
+      return process.exit();
+    }
     DB = db;
-    DB.addListener("error", function(err) {
-      return console.err("Error connecting to MongoDB");
-    });
-    if (!error) return console.log("Successfully connected to database");
+    if (!error) return console.log("* Successfully connected to database");
   });
 
   get_stores_from_coordinates = function(coords, limit, callback) {

@@ -16,17 +16,20 @@
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/Icon-72@2x.png" />
 </head>
 <body>
-	<header role="banner">
-		<h1>Är <strong>Systembolaget</strong> öppet?</h1>
-	</header>
+	<div class="frame">
+		<header role="banner">
+			<h1>Är <strong>Systembolaget</strong> öppet?</h1>
+		</header>
 	
-	<section role="main">
-		<%- body %>
-	</section>
+		<section role="main">
+			<%- body %>
+		</section>
+	
+	</div>
 	
 	<footer role="contentinfo">
 		<p>
-			<small>Made by Johan Brook</small>
+			<small>Made by <a href="http://johanbrook.com">Johan Brook</a></small>
 		</p>
 	</footer>
 	
@@ -58,19 +61,23 @@
 				</div>
 			</div>
 			
-			<div class="column">
-				<section class="details">
-					<p><strong>Närmaste Systembolag är</strong></p>
-				
-					<h2><a href="http://maps.google.se?q={query_url}">{store}</a> ({postal_code}, {locality})</h2>
-				
-					<p>Öppnar <time>{opens}</time> och stänger <time>{closes}</time>. Klockan är just nu {now}</p>
-				</section>
+			<section>
+
+				<a class="button block details" href="#">
+					<small>Närmaste Systembolag är</small><br />
 			
-				<a href="tel:{phone}" class="phone details block">
-					<p>Ring på nummer: <strong>{phone}</strong></p>
+					<strong class="link store">{store}</strong><br />
+					<small class="address">({postal_code}, {locality})</small>
 				</a>
-			</div>
+
+					
+				<p>Öppnar <time>{opens}</time> och stänger <time>{closes}</time>. Klockan är just nu {now}</p>
+				
+			
+				<a href="tel:{phone}" class="phone button block">
+					Ring på nummer: <strong>{phone}</strong>
+				</a>
+			</section>
 	</script>
 	
 	<script src="/javascripts/zepto.min.js"></script>
