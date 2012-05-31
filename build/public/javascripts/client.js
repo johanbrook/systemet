@@ -60,7 +60,6 @@
 
   error = function(object) {
     var data;
-    console.log(object);
     if (object instanceof XMLHttpRequest) {
       data = JSON.parse(object.responseText);
     } else {

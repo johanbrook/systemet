@@ -50,7 +50,6 @@ showClosestStore = (json) ->
 
 
 error = (object) ->
-	console.log object
 	if object instanceof XMLHttpRequest
 		data = JSON.parse object.responseText
 	else	
