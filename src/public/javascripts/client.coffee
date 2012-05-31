@@ -30,14 +30,20 @@ showClosestStore = (json) ->
 	return error "No data was received" if not json or json.length is 0
 	obj = json[0]
 	
+	today = new Date()
 	opens = new Date(Date.parse obj.opening_hours.opens)
 	closes = new Date(Date.parse obj.opening_hours.closes)
-	is_open = new Date().between opens, closes
+	is_open = today.between opens, closes
+	
+	time_left = today.getMinutesBetween closes
+	store_is_closing_soon = is_open and time_left < 30
+	unit = if time_left is 1 then "minut" else "minuter"
 
 	data = 
 		opens: opens.toFormat "HH24:MI"
 		closes: closes.toFormat "HH24:MI"
-		now: new Date().toFormat "HH24:MI"
+		now: today.toFormat "HH24:MI"
+		time_left: if store_is_closing_soon then "<p><strong>#{time_left} #{unit} till stängning!</strong></1>" else ""
 		store: obj.address
 		postal_code: obj.postal_code
 		locality: capitalize obj.locality
@@ -70,7 +76,6 @@ geoError = (err) ->
             message = "Det tog för lång tid att avgöra din position";            
 	
 	message = "Okänt fel uppstod" if message is ""
-	
 	error message
 
 $(document).ready ->
