@@ -1,5 +1,5 @@
 (function() {
-  var capitalize, error, handler, render, showClosestStore, t;
+  var capitalize, error, geoError, handler, render, showClosestStore, t;
 
   t = function(template, data) {
     var key, val;
@@ -60,6 +60,7 @@
 
   error = function(object) {
     var data;
+    console.log(object);
     if (object instanceof XMLHttpRequest) {
       data = JSON.parse(object.responseText);
     } else {
@@ -71,9 +72,25 @@
     return render("[role='main']", "#error-template", data);
   };
 
+  geoError = function(err) {
+    var message;
+    switch (err.code) {
+      case err.PERMISSION_DENIED:
+        message = "Du måste godkänna positionering för att använda appen";
+        break;
+      case err.POSITION_UNAVAILABLE:
+        message = "Din position kunde inte hittas";
+        break;
+      case err.PERMISSION_DENIED_TIMEOUT:
+        message = "Det tog för lång tid att avgöra din position";
+    }
+    if (message === "") message = "Okänt fel uppstod";
+    return error(message);
+  };
+
   $(document).ready(function() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(handler, error);
+      navigator.geolocation.getCurrentPosition(handler, geoError);
     } else {
       error("Geolocation is not supported. Get a better browser in order to use this app");
     }

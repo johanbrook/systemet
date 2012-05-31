@@ -50,6 +50,7 @@ showClosestStore = (json) ->
 
 
 error = (object) ->
+	console.log object
 	if object instanceof XMLHttpRequest
 		data = JSON.parse object.responseText
 	else	
@@ -58,10 +59,24 @@ error = (object) ->
 	console.error object
 	render "[role='main']", "#error-template", data
 
+geoError = (err) ->
+	switch err.code
+        when err.PERMISSION_DENIED
+            message = "Du måste godkänna positionering för att använda appen";
+
+        when err.POSITION_UNAVAILABLE
+            message = "Din position kunde inte hittas";
+
+        when err.PERMISSION_DENIED_TIMEOUT
+            message = "Det tog för lång tid att avgöra din position";            
+	
+	message = "Okänt fel uppstod" if message is ""
+	
+	error message
 
 $(document).ready ->
 	if navigator.geolocation
-		navigator.geolocation.getCurrentPosition handler, error
+		navigator.geolocation.getCurrentPosition handler, geoError
 	else
 		error "Geolocation is not supported. Get a better browser in order to use this app"
 	
