@@ -15,7 +15,6 @@ capitalize = (string) ->
 
 
 handler = (position) ->
-	console.log position.coords.latitude + " " + position.coords.longitude
 	latitude = position.coords.latitude
 	longitude = position.coords.longitude
 

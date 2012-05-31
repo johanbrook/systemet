@@ -22,7 +22,6 @@
 
   handler = function(position) {
     var latitude, longitude;
-    console.log(position.coords.latitude + " " + position.coords.longitude);
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
     return $.ajax({
