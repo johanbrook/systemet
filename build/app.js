@@ -4,9 +4,11 @@
 */
 
 (function() {
-  var app, express, routes;
+  var app, connect, express, routes;
 
   express = require('express');
+
+  connect = require('connect');
 
   routes = require('./routes');
 
@@ -29,7 +31,8 @@
   });
 
   app.configure('production', function() {
-    return app.use(express.errorHandler());
+    app.use(express.errorHandler());
+    return app.use(connect.compress());
   });
 
   app.get('/', routes.index);

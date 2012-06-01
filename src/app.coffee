@@ -3,6 +3,7 @@
 ###
 
 express = 	require 'express'
+connect = 	require 'connect'
 routes = 	require './routes'
 
 app = module.exports = express.createServer()
@@ -22,6 +23,7 @@ app.configure 'development', ->
 
 app.configure 'production', ->
 	app.use express.errorHandler()
+	app.use connect.compress()
 
 # Routes
 
