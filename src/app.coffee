@@ -24,7 +24,6 @@ app.configure 'development', ->
 
 app.configure 'production', ->
 	app.use express.errorHandler()
-	app.use connect.compress()
 
 # Routes
 

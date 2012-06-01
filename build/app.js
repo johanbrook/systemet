@@ -33,8 +33,7 @@
   });
 
   app.configure('production', function() {
-    app.use(express.errorHandler());
-    return app.use(connect.compress());
+    return app.use(express.errorHandler());
   });
 
   app.get('/', routes.index);
