@@ -4,11 +4,11 @@
 */
 
 (function() {
-  var app, connect, express, routes;
+  var app, express, gzippo, routes;
 
   express = require('express');
 
-  connect = require('connect');
+  gzippo = require('gzippo');
 
   routes = require('./routes');
 
@@ -20,7 +20,9 @@
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(app.router);
-    return app.use(express.static(__dirname + '/public'));
+    return app.use(gzippo.staticGzip(__dirname + '/public', {
+      contentTypeMatch: /text|javascript|json|css|html/
+    }));
   });
 
   app.configure('development', function() {

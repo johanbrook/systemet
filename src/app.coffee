@@ -3,7 +3,7 @@
 ###
 
 express = 	require 'express'
-connect = 	require 'connect'
+gzippo = 	require 'gzippo'
 routes = 	require './routes'
 
 app = module.exports = express.createServer()
@@ -16,7 +16,8 @@ app.configure ->
 	app.use express.bodyParser()
 	app.use express.methodOverride()
 	app.use app.router
-	app.use express.static(__dirname + '/public')
+	app.use gzippo.staticGzip __dirname + '/public', 
+		contentTypeMatch: /text|javascript|json|css|html/
 
 app.configure 'development', ->
 	app.use express.errorHandler { dumpExceptions: true, showStack: true }
