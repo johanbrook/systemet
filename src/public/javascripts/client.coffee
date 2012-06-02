@@ -43,7 +43,7 @@ showClosestStore = (json) ->
 		opens: opens.toFormat "HH24:MI"
 		closes: closes.toFormat "HH24:MI"
 		now: today.toFormat "HH24:MI"
-		time_left: if store_is_closing_soon then "<p><strong>#{time_left} #{unit} till stängning!</strong></1>" else ""
+		time_left: if store_is_closing_soon then "<p><strong>#{time_left} #{unit} till stängning!</strong></p>" else ""
 		store: obj.address
 		postal_code: obj.postal_code
 		locality: capitalize obj.locality

@@ -51,7 +51,7 @@
       opens: opens.toFormat("HH24:MI"),
       closes: closes.toFormat("HH24:MI"),
       now: today.toFormat("HH24:MI"),
-      time_left: store_is_closing_soon ? "<p><strong>" + time_left + " " + unit + " till stängning!</strong></1>" : "",
+      time_left: store_is_closing_soon ? "<p><strong>" + time_left + " " + unit + " till stängning!</strong></p>" : "",
       store: obj.address,
       postal_code: obj.postal_code,
       locality: capitalize(obj.locality),
