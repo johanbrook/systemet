@@ -11,9 +11,7 @@
   };
 
   render = function(element, template, data) {
-    var text;
-    text = t($(template).html(), data);
-    return $(element).html(text);
+    return $(element).html(ich[template](data));
   };
 
   capitalize = function(string) {
@@ -60,7 +58,7 @@
       answer: is_open ? "yes" : "no",
       query_url: encodeURIComponent("" + obj.address + " " + obj.postal_code + " " + obj.locality)
     };
-    return render("#closest-store", "#closest-store-template", data);
+    return render("#closest-store", "store", data);
   };
 
   error = function(object) {

@@ -50,15 +50,15 @@
 		</p>
 	</footer>
 	
-	<script id="error-template" type="text/html">
-		<strong class="error">{message}</strong>
+	<script id="error" type="text/html">
+		<strong class="error">{{message}}</strong>
 	</script>
 	
-	<script id="closest-store-template" type="text/html">
+	<script id="store" type="text/html">
 			<div class="card-container">
 				<div id="card">
 					<section class="card front">
-						<h1 class="answer answer-{answer} huge">{is_open}</h1>
+						<h1 class="answer answer-{{answer}} huge">{{is_open}}</h1>
 						<a class="flip">?</a>
 					</section>
 					
@@ -77,25 +77,26 @@
 			
 			<section>
 
-				<a class="button block details" href="http://maps.google.se?q={query_url}">
+				<a class="button block details" href="http://maps.google.se?q={{query_url}}">
 					<small>Närmaste Systembolag är</small><br />
 			
-					<strong class="link store">{store}</strong><br />
-					<small class="address">({postal_code}, {locality})</small>
+					<strong class="link store">{{store}}</strong><br />
+					<small class="address">({{postal_code}}, {{locality}})</small>
 				</a>
 
-				{time_left}
+				{{time_left}}
 				
-				<p>Öppnar <time>{opens}</time> och stänger <time>{closes}</time></p>
+				<p>Öppnar <time>{{opens}}</time> och stänger <time>{{closes}}</time></p>
 				
 			
-				<a href="tel:{phone}" class="phone button block">
-					Ring på nummer: <strong>{phone}</strong>
+				<a href="tel:{{phone}}" class="phone button block">
+					Ring på nummer: <strong>{{phone}}</strong>
 				</a>
 			</section>
 	</script>
 	
 	<script src="/javascripts/zepto.min.js"></script>
+	<script src="/javascripts/icanhaz.min.js"></script>
 	<script src="/javascripts/date-utils.min.js"></script>
 	<script src="/javascripts/client.js"></script>
 </body>

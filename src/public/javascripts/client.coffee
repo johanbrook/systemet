@@ -1,3 +1,5 @@
+# Micro-templating.
+# Deprecated, 2012-06-02. Using Mustache.js instead
 t = (template, data) ->
 
 	for key, val of data
@@ -6,9 +8,7 @@ t = (template, data) ->
 	return template
 
 render = (element, template, data) ->
-	text = t $(template).html(), data
-	$(element).html text
-	
+	$(element).html ich[template](data)
 
 capitalize = (string) ->
 	string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
@@ -52,7 +52,7 @@ showClosestStore = (json) ->
 		answer: if is_open then "yes" else "no"
 		query_url: encodeURIComponent("#{obj.address} #{obj.postal_code} #{obj.locality}")
 	
-	render "#closest-store", "#closest-store-template", data
+	render "#closest-store", "store", data
 
 
 error = (object) ->
