@@ -43,7 +43,8 @@
     today = new Date();
     opens = new Date(Date.parse(obj.opening_hours.opens));
     closes = new Date(Date.parse(obj.opening_hours.closes));
-    is_open = today.between(opens, closes);
+    is_open = obj.opening_hours.open_today && today.between(opens, closes);
+    console.log(obj);
     time_left = today.getMinutesBetween(closes);
     store_is_closing_soon = is_open && time_left < 30;
     unit = time_left === 1 ? "minut" : "minuter";
@@ -52,6 +53,7 @@
       closes: closes.toFormat("HH24:MI"),
       now: today.toFormat("HH24:MI"),
       time_left: store_is_closing_soon ? "<p><strong>" + time_left + " " + unit + " till stängning!</strong></p>" : "",
+      opening_hours: is_open ? "Öppnar <time>" + opens + "</time> och stänger <time>" + closes + "</time>" : "<strong>Denna butik har stängt idag</strong>",
       store: obj.address,
       postal_code: obj.postal_code,
       locality: capitalize(obj.locality),

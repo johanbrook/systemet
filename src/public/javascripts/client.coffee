@@ -33,17 +33,23 @@ showClosestStore = (json) ->
 	today = new Date()
 	opens = new Date(Date.parse obj.opening_hours.opens)
 	closes = new Date(Date.parse obj.opening_hours.closes)
-	is_open = today.between opens, closes
+	is_open = obj.opening_hours.open_today and today.between opens, closes
+	
+	console.log obj
 	
 	time_left = today.getMinutesBetween closes
 	store_is_closing_soon = is_open and time_left < 30
 	unit = if time_left is 1 then "minut" else "minuter"
+
+	# Horribly ugly with conditional logic INSIDE this data object, I know ..
+	# Will fix with more powerful templating engine later.
 
 	data = 
 		opens: opens.toFormat "HH24:MI"
 		closes: closes.toFormat "HH24:MI"
 		now: today.toFormat "HH24:MI"
 		time_left: if store_is_closing_soon then "<p><strong>#{time_left} #{unit} till stängning!</strong></p>" else ""
+		opening_hours: if is_open then "Öppnar <time>#{opens}</time> och stänger <time>#{closes}</time>" else "<strong>Denna butik har stängt idag</strong>"
 		store: obj.address
 		postal_code: obj.postal_code
 		locality: capitalize obj.locality

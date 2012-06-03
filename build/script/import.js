@@ -64,7 +64,7 @@
   importFromXML = function(xml, collection) {
     parser.removeAllListeners();
     return parser.parseString(xml, function(err, json) {
-      var data, item, lat_long, s, schedule, store, stores, today, _i, _len;
+      var data, end_time, item, lat_long, s, schedule, start_time, store, stores, today, _i, _len;
       if (err) error(err);
       stores = json.ButikOmbud;
       data = [];
@@ -78,6 +78,8 @@
         today = Date.today().toFormat("YYYY-MM-DD");
         s = item.Oppettider;
         schedule = s.substr(s.search(today), 22).split(";");
+        start_time = schedule[1].match(/(\d\d:\d\d)/) ? schedule[1] : null;
+        end_time = schedule[2].match(/(\d\d:\d\d)/) ? schedule[2] : null;
         store.store_nr = item.Nr;
         store.address = item.Address1;
         store.postal_code = item.Address3.replace("S-", "");
@@ -85,9 +87,10 @@
         store.phone = item.Telefon.replace("\/", "-");
         store.loc = lat_long;
         store.opening_hours = {
-          short_date: "" + schedule[0] + " " + schedule[1] + "-" + schedule[2],
-          opens: new Date(Date.parse("" + schedule[0] + " " + schedule[1] + " GMT+0200")),
-          closes: new Date(Date.parse("" + schedule[0] + " " + schedule[2] + " GMT+0200"))
+          open_today: start_time && end_time ? true : false,
+          short_date: start_time && end_time ? "" + schedule[0] + " " + start_time + "-" + end_time : void 0,
+          opens: start_time ? new Date(Date.parse("" + start_time + " " + end_time + " GMT+0200")) : void 0,
+          closes: end_time ? new Date(Date.parse("" + start_time + " " + end_time + " GMT+0200")) : void 0
         };
         data.push(store);
       }

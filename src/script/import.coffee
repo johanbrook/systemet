@@ -75,6 +75,8 @@ importFromXML = (xml, collection) ->
 			
 			s = item.Oppettider
 			schedule = s.substr(s.search(today), 22).split(";")
+			start_time = if schedule[1].match(/(\d\d:\d\d)/) then schedule[1] else null
+			end_time = if schedule[2].match(/(\d\d:\d\d)/) then schedule[2] else null
 			
 			store.store_nr = item.Nr
 			store.address = item.Address1
@@ -85,9 +87,10 @@ importFromXML = (xml, collection) ->
 			
 			
 			store.opening_hours = 
-				short_date: "#{schedule[0]} #{schedule[1]}-#{schedule[2]}"
-				opens: new Date( Date.parse("#{schedule[0]} #{schedule[1]} GMT+0200") )
-				closes: new Date( Date.parse("#{schedule[0]} #{schedule[2]} GMT+0200") )
+				open_today: if start_time and end_time then true else false
+				short_date: if start_time and end_time then "#{schedule[0]} #{start_time}-#{end_time}"
+				opens: if start_time then new Date( Date.parse("#{start_time} #{end_time} GMT+0200") )
+				closes: if end_time then new Date( Date.parse("#{start_time} #{end_time} GMT+0200") )
 			
 			data.push store
 		
