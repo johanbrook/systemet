@@ -85,12 +85,11 @@ importFromXML = (xml, collection) ->
 			store.phone = item.Telefon.replace("\/", "-")
 			store.loc = lat_long
 			
-			
 			store.opening_hours = 
 				open_today: if start_time and end_time then true else false
 				short_date: if start_time and end_time then "#{schedule[0]} #{start_time}-#{end_time}"
-				opens: if start_time then new Date( Date.parse("#{start_time} #{end_time} GMT+0200") )
-				closes: if end_time then new Date( Date.parse("#{start_time} #{end_time} GMT+0200") )
+				opens: if start_time then new Date( Date.parse("#{schedule[0]} #{start_time} GMT+0200") )
+				closes: if end_time then new Date( Date.parse("#{schedule[0]} #{end_time} GMT+0200") )
 			
 			data.push store
 		

@@ -89,8 +89,8 @@
         store.opening_hours = {
           open_today: start_time && end_time ? true : false,
           short_date: start_time && end_time ? "" + schedule[0] + " " + start_time + "-" + end_time : void 0,
-          opens: start_time ? new Date(Date.parse("" + start_time + " " + end_time + " GMT+0200")) : void 0,
-          closes: end_time ? new Date(Date.parse("" + start_time + " " + end_time + " GMT+0200")) : void 0
+          opens: start_time ? new Date(Date.parse("" + schedule[0] + " " + start_time + " GMT+0200")) : void 0,
+          closes: end_time ? new Date(Date.parse("" + schedule[0] + " " + end_time + " GMT+0200")) : void 0
         };
         data.push(store);
       }
