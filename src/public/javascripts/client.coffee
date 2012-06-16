@@ -63,6 +63,7 @@ showClosestStore = (json) ->
 		phone: obj.phone
 		answer: if is_open then "yes" else "no"
 		query_url: encodeURIComponent("#{obj.address} #{obj.postal_code} #{obj.locality}")
+		store_query: encodeURIComponent(obj.address.split(" ")[0])
 	
 	render "#closest-store", "#closest-store-template", data
 

@@ -60,7 +60,8 @@
       is_open: is_open ? "Ja" : "Nej",
       phone: obj.phone,
       answer: is_open ? "yes" : "no",
-      query_url: encodeURIComponent("" + obj.address + " " + obj.postal_code + " " + obj.locality)
+      query_url: encodeURIComponent("" + obj.address + " " + obj.postal_code + " " + obj.locality),
+      store_query: encodeURIComponent(obj.address.split(" ")[0])
     };
     return render("#closest-store", "#closest-store-template", data);
   };

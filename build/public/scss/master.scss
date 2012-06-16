@@ -163,6 +163,18 @@ time {
 	font-weight: bold;
 }
 
+.list {
+	list-style: none;
+	
+	li {
+		margin-bottom: .5em;
+	}
+	
+	li > a {
+		@extend .button;
+	}
+}
+
 
 /*	=CARD FLIP
 ----------------------------------------------------------------------*/
