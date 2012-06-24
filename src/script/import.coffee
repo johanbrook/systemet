@@ -80,9 +80,9 @@ importFromXML = (xml, collection) ->
 			
 			store.store_nr = item.Nr
 			store.address = item.Address1
-			store.postal_code = item.Address3.replace("S-", "")
+			store.postal_code = item.Address3?.replace("S-", "")
 			store.locality = item.Address4
-			store.phone = item.Telefon.replace("\/", "-")
+			store.phone = if not isEmpty(item.Telefon) then item.Telefon.replace("\/", "-") else ""
 			store.loc = lat_long
 			
 			store.opening_hours = 

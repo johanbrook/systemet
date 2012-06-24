@@ -64,7 +64,7 @@
   importFromXML = function(xml, collection) {
     parser.removeAllListeners();
     return parser.parseString(xml, function(err, json) {
-      var data, end_time, item, lat_long, s, schedule, start_time, store, stores, today, _i, _len;
+      var data, end_time, item, lat_long, s, schedule, start_time, store, stores, today, _i, _len, _ref;
       if (err) error(err);
       stores = json.ButikOmbud;
       data = [];
@@ -82,9 +82,9 @@
         end_time = schedule[2].match(/(\d\d:\d\d)/) ? schedule[2] : null;
         store.store_nr = item.Nr;
         store.address = item.Address1;
-        store.postal_code = item.Address3.replace("S-", "");
+        store.postal_code = (_ref = item.Address3) != null ? _ref.replace("S-", "") : void 0;
         store.locality = item.Address4;
-        store.phone = item.Telefon.replace("\/", "-");
+        store.phone = !isEmpty(item.Telefon) ? item.Telefon.replace("\/", "-") : "";
         store.loc = lat_long;
         store.opening_hours = {
           open_today: start_time && end_time ? true : false,
