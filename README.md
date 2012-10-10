@@ -2,7 +2,7 @@
 
 This is a small app which responds "Yes" or "No" to the question above, which I've asked myself many, many times.
 
-### Surf to [systemet.johanbrook.com](http://systemet.johanbrook.com) to visit the app live
+### Visit [oppet.systmt.se](http://oppet.systmt.se) to check out the app live
 
 In Sweden there's this alcohol monopoly, which means all liqour stores are run by the state. 
 Thus there's no competition, and the opening hours are ... not that satisfactory. There's been days where I in panic
