@@ -1,5 +1,5 @@
 (function() {
-  var coll, dbCallback, db_name, done, error, fs, gauss, host, http, importFromXML, isEmpty, mongo, mongo_url, parser, port, req_opts, xml;
+  var coll, dbCallback, db_name, done, error, fs, gauss, host, http, importFromXML, isEmpty, mongo, mongo_url, parser, port, req_opts, shouldSkip, xml;
 
   fs = require("fs");
 
@@ -64,25 +64,23 @@
   importFromXML = function(xml, collection) {
     parser.removeAllListeners();
     return parser.parseString(xml, function(err, json) {
-      var data, end_time, item, lat_long, s, schedule, start_time, store, stores, today, _i, _len, _ref;
+      var data, end_time, item, lat_long, s, schedule, start_time, store, stores, today, _i, _len, _ref, _ref2, _ref3;
       if (err) error(err);
       stores = json.ButikOmbud;
       data = [];
       for (_i = 0, _len = stores.length; _i < _len; _i++) {
         item = stores[_i];
         store = {};
-        if (!item.RT90x || !item.RT90y || isEmpty(item.Oppettider) || item.Typ !== "Butik") {
-          continue;
-        }
+        if (shouldSkip(item)) continue;
         lat_long = gauss.grid_to_geodetic(item.RT90x, item.RT90y);
         today = Date.today().toFormat("YYYY-MM-DD");
         s = item.Oppettider;
         schedule = s.substr(s.search(today), 22).split(";");
-        start_time = schedule[1].match(/(\d\d:\d\d)/) ? schedule[1] : null;
-        end_time = schedule[2].match(/(\d\d:\d\d)/) ? schedule[2] : null;
+        start_time = ((_ref = schedule[1]) != null ? _ref.match(/(\d\d:\d\d)/) : void 0) ? schedule[1] : null;
+        end_time = ((_ref2 = schedule[2]) != null ? _ref2.match(/(\d\d:\d\d)/) : void 0) ? schedule[2] : null;
         store.store_nr = item.Nr;
         store.address = item.Address1;
-        store.postal_code = (_ref = item.Address3) != null ? _ref.replace("S-", "") : void 0;
+        store.postal_code = (_ref3 = item.Address3) != null ? _ref3.replace("S-", "") : void 0;
         store.locality = item.Address4;
         store.phone = !isEmpty(item.Telefon) ? item.Telefon.replace("\/", "-") : "";
         store.loc = lat_long;
@@ -100,9 +98,13 @@
     });
   };
 
+  shouldSkip = function(store) {
+    return !store.RT90x || !store.RT90y || isEmpty(store.Oppettider) || store.Typ !== "Butik" || isNaN(store.RT90x) || isNaN(store.RT90y);
+  };
+
   done = function(err, result) {
     if (err) {
-      console.log(err);
+      error(err);
     } else {
       console.log("* Imported " + result.length + " items from " + req_opts.host + " into collection '" + coll + "'");
     }

@@ -67,16 +67,16 @@ importFromXML = (xml, collection) ->
 			# Don't insert into database if there aren't any opening
 			# hours or coordinates, or if the type isn't a regular store
 			
-			continue if not item.RT90x or not item.RT90y or isEmpty(item.Oppettider) or item.Typ isnt "Butik"
-			
-			lat_long = gauss.grid_to_geodetic item.RT90x, item.RT90y
+			continue if shouldSkip(item)
 
+			lat_long = gauss.grid_to_geodetic item.RT90x, item.RT90y
 			today = Date.today().toFormat "YYYY-MM-DD"
 			
 			s = item.Oppettider
 			schedule = s.substr(s.search(today), 22).split(";")
-			start_time = if schedule[1].match(/(\d\d:\d\d)/) then schedule[1] else null
-			end_time = if schedule[2].match(/(\d\d:\d\d)/) then schedule[2] else null
+
+			start_time = if schedule[1]?.match(/(\d\d:\d\d)/) then schedule[1] else null
+			end_time = if schedule[2]?.match(/(\d\d:\d\d)/) then schedule[2] else null
 			
 			store.store_nr = item.Nr
 			store.address = item.Address1
@@ -95,9 +95,17 @@ importFromXML = (xml, collection) ->
 		
 		collection.insert data, safe: true, done
 
+shouldSkip = (store) ->
+	not store.RT90x or 
+	not store.RT90y or 
+	isEmpty(store.Oppettider) or 
+	store.Typ isnt "Butik" or
+	isNaN(store.RT90x) or 
+	isNaN(store.RT90y)
+
 done = (err, result) ->
 	if err
-		console.log err
+		error(err)
 	else
 		console.log "* Imported #{result.length} items from #{req_opts.host} into collection '#{coll}'"
 
